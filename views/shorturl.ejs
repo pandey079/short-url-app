@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>URL Shortener</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+  <%- include('./partials/nav') %>
+  <div class="flex flex-col items-center justify-center min-h-screen p-4">
+    <div class="w-full max-w-lg bg-white p-8 rounded-lg shadow-lg">
+      <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Generate Shortened Link</h2>
+      
+      <!-- Input box for URL -->
+      <form id="url-form">
+          <div class="mb-4">
+              <input type="text" id="long-url" name="longUrl" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter your long URL" required>
+          </div>
+          
+          <!-- Generate button -->
+          <button type="submit" id="generate-btn" class="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition duration-300">
+              Generate Shortened Link
+          </button>
+      </form>
+
+      <!-- Display section for generated link and data -->
+      <div id="result" class="mt-6 hidden">
+          <h3 class="text-xl font-bold text-gray-800 mb-2">Shortened Link:</h3>
+          <p id="shortened-link" class="text-blue-500 break-all"></p>
+
+          <h3 class="text-xl font-bold text-gray-800 mb-2 mt-4">Link Data:</h3>
+          <ul id="link-data" class="text-gray-600 list-disc list-inside">
+              <li><strong>Original URL:</strong> <span id="original-url"></span></li>
+              <li><strong>Created At:</strong> <span id="created-at"></span></li>
+              <li><strong>Click Count:</strong> <span id="click-count">0</span></li>
+          </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Script to handle the shortening logic -->
+  <script>
+      document.getElementById('url-form').addEventListener('submit', function(event) {
+          event.preventDefault(); // Prevent the form from submitting traditionally
+          console.log('Form submitted');
+
+          const longUrl = document.getElementById('long-url').value;
+          console.log('Long URL:', longUrl);
+          if (longUrl) {
+              fetch('/home', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ longUrl: longUrl })
+              })
+              .then(response => {
+                  console.log('Response received');
+                  return response.json();
+              })
+              .then(data => {
+                  console.log('Data:', data);
+                  if (data.error) {
+                      alert(data.error);
+                  } else {
+                      // Display the generated short link and additional data
+                      document.getElementById('shortened-link').innerText = data.shortLink;
+                      document.getElementById('original-url').innerText = data.originalUrl;
+                      document.getElementById('created-at').innerText = data.createdAt;
+                      document.getElementById('click-count').innerText = data.clickCount;
+
+                      // Show result section
+                      document.getElementById('result').classList.remove('hidden');
+                  }
+              })
+              .catch(error => console.error('Error:', error));
+          }
+      });
+  </script>
+
+</body>
+</html>

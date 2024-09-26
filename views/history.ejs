@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History | Url Shortener</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100">
+  <%- include('./partials/nav') %>
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
+    <!-- Header for the card section -->
+    <div class="bg-white shadow-md rounded-lg p-4 mb-4 flex items-center">
+        <div class="flex-1 text-gray-700">
+            <div class="flex justify-between font-semibold">
+                <span>S.No</span>
+                <span>Short ID</span>
+                <span>Shortened URL</span>
+                <span>Total Visited</span>
+            </div>
+        </div>
+    </div>
+
+    <% cnt = 1 %>
+    <% urls.forEach(url => { %>
+        <!-- Single Card Example -->
+        <div class="bg-white shadow-md rounded-lg p-4 mb-4 flex items-center transition-shadow duration-300 ease-in-out hover:shadow-lg">
+            <div class="flex-1 text-gray-700">
+                <div class="flex justify-between">
+                  <span class="font-semibold"><%= cnt++ %></span> <!-- S.No -->
+                  <span class="text-sm text-gray-500"><%= url.shortId %></span> <!-- Short ID -->
+                  <span class="text-sm text-gray-500">http://localhost:4000/url/<%= url.shortId %></span> <!-- Shortened URL -->
+                  <span class="font-semibold"><%= url.visitHistory.length %></span> <!-- Total Visited -->
+                </div>
+            </div>
+        </div>
+    <% }) %>
+  </div>
+</body>
+</html>
+
+

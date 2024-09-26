@@ -1,0 +1,53 @@
+<!-- Navbar -->
+<nav class="bg-white shadow-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-16">
+            <div class="flex">
+                <a href="/" class="text-2xl font-bold text-gray-800 self-center">URL Shortener</a>
+                <div class="hidden sm:ml-6 sm:flex">
+                    <a href="/home" class="ml-6 text-gray-700 hover:text-gray-900 self-center">Home</a>
+                    <a href="#about" class="ml-6 text-gray-700 hover:text-gray-900 self-center">About</a>
+                    <a href="/history" class="ml-6 text-gray-700 hover:text-gray-900 self-center">History</a>
+                </div>
+            </div>
+            <!-- Dropdown -->
+            <div class="relative inline-block text-left self-center">
+                <button type="button" class="inline-flex justify-center w-full rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50" id="menu-button">
+                    
+                    <% if (locals.user) { %>
+                          <%= user.username %>
+                      <% } else { %>
+                          Login
+                      <% } %>
+                  
+                    <svg class="-mr-1 ml-2 h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <div class="hidden origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none" id="dropdown-menu">
+                    <div class="py-1">
+
+                    <% if (locals.user) { %>
+                      <a href="/user/profile" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Profile</a>
+                      <a href="/user/logout" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Logout</a>
+                    <% } else { %>
+                      <a href="/user/signup" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Sign Up</a>
+                      <a href="/user/login" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Log In</a>
+                    <% } %>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Script for Dropdown -->
+<script>
+    const button = document.getElementById('menu-button');
+    const dropdown = document.getElementById('dropdown-menu');
+
+    button.addEventListener('click', () => {
+        dropdown.classList.toggle('hidden');
+    });
+</script>
