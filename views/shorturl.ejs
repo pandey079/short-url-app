@@ -66,7 +66,8 @@
                       alert(data.error);
                   } else {
                       // Display the generated short link and additional data
-                      document.getElementById('shortened-link').innerText = data.shortLink;
+                    //   document.getElementById('shortened-link').innerText = data.shortLink;
+                      document.getElementById('shortened-link').innerHTML = `<a href="${data.shortLink}" target="_blank">${data.shortLink}</a>`
                       document.getElementById('original-url').innerText = data.originalUrl;
                       document.getElementById('created-at').innerText = data.createdAt;
                       document.getElementById('click-count').innerText = data.clickCount;

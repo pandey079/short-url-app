@@ -55,7 +55,7 @@ app.post('/home', async(req, res) => {
         visitedHistory: []
     }) 
     res.json({
-        shortLink: `short.ly/url/${short_ID}`,
+        shortLink: `https://short-url-app-gy3g.onrender.com/url/${short_ID}`,
         originalUrl: longUrl,
         createdAt: new Date().toLocaleString(),
         clickCount: 0
